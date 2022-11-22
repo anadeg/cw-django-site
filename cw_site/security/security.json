@@ -1,0 +1,12 @@
+{
+        "db" :
+        {
+                "ENGINE": "django.db.backends.mysql",
+                "NAME": "cw",
+                "USER": "root",
+                "PASSWORD": "password",
+                "HOST": "127.0.0.1",
+                "PORT": "3306"
+        },
+        "token": "django-insecure-zfz2jci)jz^p(tfv6@5+#uqf&chxx=t79kgujs%v+ty+-cam+m"
+}
