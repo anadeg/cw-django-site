@@ -12,16 +12,21 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 
 from pathlib import Path
 
+import os
+import json
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+with open(os.path.join(BASE_DIR, 'cw_site', 'security', 'security.json'), 'r') as f:
+    data = json.load(f)
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-zfz2jci)jz^p(tfv6@5+#uqf&chxx=t79kgujs%v+ty+-cam+m'
-
+# SECRET_KEY = 'django-insecure-zfz2jci)jz^p(tfv6@5+#uqf&chxx=t79kgujs%v+ty+-cam+m'
+SECRET_KEY = data["token"]
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -74,14 +79,7 @@ WSGI_APPLICATION = 'cw_site.wsgi.application'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'cw',
-        'USER': 'root',
-        'PASSWORD': 'password',
-        'HOST': '127.0.0.1',
-        'PORT': '3306'
-    }
+    'default': data["db"]
 }
 
 
