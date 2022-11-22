@@ -1,11 +1,15 @@
 import pandas as pd
 import numpy as np
+
 from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.svm import SVC
 from sklearn.neighbors import KNeighborsClassifier
 from xgboost import XGBClassifier
+from catboost import CatBoostClassifier
+
 from sklearn.preprocessing import LabelEncoder, MinMaxScaler
+
 from sklearn.model_selection import cross_val_score
 from sklearn.metrics import accuracy_score
 
@@ -19,6 +23,7 @@ class Advise:
         self.X = None
         self.Y = None
         self.le = None
+        self.model = None
 
     def convert(self, file_train):
         data = pd.read_csv(file_train)
@@ -67,11 +72,11 @@ class Advise:
                         'chem', 'forest'],
                inplace=True)
 
-        x = MinMaxScaler().fit_transform(np.array(x))
+        x = MinMaxScaler().fit_transform(np.array(x))       # for avoiding ITERATION REACHED LIMIT
         return x
 
-    def teach(self, models):
-        self.model = self.__find_best(models)
+    def teach(self, models, preferred_model=None):
+        self.__find_best(models, preferred_model=preferred_model)
         self.model.fit(self.X, self.Y)
 
     def advise(self, input):
@@ -79,15 +84,18 @@ class Advise:
         prediction = self.le.inverse_transform(prediction)
         return prediction
 
-    def __find_best(self, models):
-        best_model = models[0]
-        best = 0
-        for model in models:
-            results = cross_val_score(model, self.X, self.Y, cv=3)
-            if best < results.mean():
-                best = results.mean()
-                best_model = model
-        return best_model
+    def __find_best(self, models, preferred_model=None):
+        if preferred_model is None:
+            best_model = models[0]
+            best = 0
+            for model in models:
+                cv_score = cross_val_score(model, self.X, self.Y, cv=3)
+                if best < cv_score.mean():
+                    best = cv_score.mean()
+                    best_model = model
+            self.model = best_model
+        else:
+            self.model = preferred_model
 
 
 if __name__ == '__main__':
@@ -99,9 +107,10 @@ if __name__ == '__main__':
     svc = SVC()
     knc = KNeighborsClassifier()
     xgb = XGBClassifier()
+    cbc = CatBoostClassifier(verbose=False)
 
-    models = [lr, rfc, svc, knc, xgb]
-    adv.teach(models)
+    models = [lr, rfc, svc, knc, xgb, cbc]
+    adv.teach(models, preferred_model=rfc)
 
     predict = pd.read_csv('cw-predict.csv')
     mapping = {"Брестская": 1, "Бресткая": 1, "Витебская": 2, "Гомельская": 3, "Гродненская": 4,
@@ -112,7 +121,7 @@ if __name__ == '__main__':
 
     y_true = adv.Y
     y_pred = adv.model.predict(adv.X)
-    print('Accuracy score --- ', accuracy_score(y_true, y_pred))
+    print('Accuracy Score --- ', accuracy_score(y_true, y_pred))
 
     predict = np.array(predict)
     results = adv.advise(predict)
