@@ -1,2 +1,4 @@
 /venv/
 /cw_site/security/
+/advise_agent/catboost_info/
+/advise_agent/catboost_info/learn/
