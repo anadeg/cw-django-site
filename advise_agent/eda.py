@@ -17,79 +17,10 @@ plt.show()
 data['region'].fillna(data['region'].mode()[0], inplace=True)
 data.fillna(0, inplace=True)
 
-ax = sns.countplot(data=data, x=data['war'], hue=data['engin'])
-for container in ax.containers:
-    ax.bar_label(container)
+d_corr = data.corr()
+fig, ax = plt.subplots()
+ax = sns.heatmap(d_corr, cmap='YlGnBu')
 plt.show()
-
-# ax = sns.countplot(data=data, x=data['math'], hue=data['it'])
-# for container in ax.containers:
-#     ax.bar_label(container)
-# plt.show()
-
-# ax = sns.countplot(data=data, x=data['int_com'], hue=data['ss'])
-# for container in ax.containers:
-#     ax.bar_label(container)
-# plt.show()
-
-# ax = sns.countplot(data=data, x=data['bio'], hue=data['chem'])
-# for container in ax.containers:
-#     ax.bar_label(container)
-# plt.show()
-
-# ax = sns.countplot(data=data, x=data['techn'], hue=data['engin'])
-# for container in ax.containers:
-#     ax.bar_label(container)
-# plt.show()
-
-# ax = sns.countplot(data=data, x=data['math'], hue=data['engin'])
-# for container in ax.containers:
-#     ax.bar_label(container)
-# plt.show()
-
-# ax = sns.countplot(data=data, x=data['ss'], hue=data['law'])
-# for container in ax.containers:
-#     ax.bar_label(container)
-# plt.show()
-
-# ax = sns.countplot(data=data, x=data['teach'], hue=data['psy'])
-# for container in ax.containers:
-#     ax.bar_label(container)
-# plt.show()
-
-# ax = sns.countplot(data=data, x=data['it'], hue=data['engin'])
-# for container in ax.containers:
-#     ax.bar_label(container)
-# plt.show()
-
-# ax = sns.countplot(data=data, x=data['phys_cult'], hue=data['bio'])
-# for container in ax.containers:
-#     ax.bar_label(container)
-# plt.show()
-
-# ax = sns.countplot(data=data, x=data['forest'], hue=data['chem'])
-# for container in ax.containers:
-#     ax.bar_label(container)
-# plt.show()
-
-# ax = sns.countplot(data=data, x=data['geo'], hue=data['bio'])
-# for container in ax.containers:
-#     ax.bar_label(container)
-# plt.show()
-
-# ax = sns.countplot(data=data, x=data['dormitory'], hue=data['region'])
-# for container in ax.containers:
-#     ax.bar_label(container)
-# plt.show()
-
-# correlation = data.corr()
-# where_corr = correlation.where((correlation >= 0.0) & (correlation < 2))
-# print(where_corr.to_string())
-
-# where_corr.fillna(0, inplace=True)
-# fig, ax = plt.subplots()
-# ax = sns.heatmap(where_corr, cmap='YlGnBu')
-# plt.show()
 
 # >= 0.3
 # journ --- int_com, theo
@@ -119,7 +50,6 @@ plt.show()
 # phys_cult --- bio, turism
 # chem --- forest
 # law --- psy, ss
-
 
 
 
