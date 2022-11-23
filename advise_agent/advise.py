@@ -23,6 +23,7 @@ class Advise:
         self.X = None
         self.Y = None
         self.le = None
+        self.scaler = None
         self.model = None
 
     def convert(self, file_train):
@@ -44,8 +45,7 @@ class Advise:
 
         self.X = self.features_engineering(self.X)
 
-    @staticmethod
-    def features_engineering(x):
+    def features_engineering(self, x):
         x['journ-int_com-theo'] = x['journ'] + x['int_com'] + x['theo']
         x['lingo-teach-psy'] = x['lingo'] + x['teach'] + x['psy']
 
@@ -72,7 +72,11 @@ class Advise:
                         'chem', 'forest'],
                inplace=True)
 
-        x = MinMaxScaler().fit_transform(np.array(x))       # for avoiding ITERATION REACHED LIMIT
+        x = np.array(x)
+        if self.scaler is None:
+            self.scaler = MinMaxScaler()
+            self.scaler.fit(x)
+        x = self.scaler.transform(x)      # for avoiding ITERATION REACHED LIMIT
         return x
 
     def teach(self, models, preferred_model=None):
@@ -112,18 +116,19 @@ if __name__ == '__main__':
     models = [lr, rfc, svc, knc, xgb, cbc]
     adv.teach(models, preferred_model=rfc)
 
-    predict = pd.read_csv('cw-predict.csv')
+    predict = pd.read_csv('cw-pashka.csv')
     mapping = {"Брестская": 1, "Бресткая": 1, "Витебская": 2, "Гомельская": 3, "Гродненская": 4,
                "Минск": 5, "Минская": 6, "Могилевская": 7, "Могилёвская": 7}
     predict['region'].replace(mapping, inplace=True)
     predict.fillna(0, inplace=True)
     predict = adv.features_engineering(predict)
 
+    print(f"Model \t\t\t|\t {adv.model}")
     y_true = adv.Y
     y_pred = adv.model.predict(adv.X)
-    print('Accuracy Score --- ', accuracy_score(y_true, y_pred))
+    print('Accuracy Score \t|\t ', accuracy_score(y_true, y_pred))
 
     predict = np.array(predict)
     results = adv.advise(predict)
     for i, res in enumerate(results):
-        print(f'{i + 1} --- {res}')
+        print(f'{res}')
