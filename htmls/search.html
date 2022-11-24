@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Search Page</title>
+</head>
+<body>
+    <table cellspacing="2" border="1" cellpadding="5">
+        <th>Понятие</th><th>Описание</th>
+        {% for title, description in concepts.items %}
+        <tr>
+            <td>{{ title }}</td>
+            <td>{{ description }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    <br>
+    <br>
+    <form action="{{ concept_search }}" method="get">
+        <input type="text" name="concept_search" placeholder="concept">
+        <input type="submit" value="search">
+    </form>
+</body>
+</html>

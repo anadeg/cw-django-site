@@ -16,9 +16,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from pages.views import (home_page_view)
+from pages.views import (home_page_view,
+                         search_page)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', home_page_view, name='home')
+    path('', home_page_view, name='home'),
+    path('search_concept/', search_page, name='srch_concept')
 ]
