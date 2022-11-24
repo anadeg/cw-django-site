@@ -2,6 +2,10 @@ body {
     background-color: floralwhite;
 }
 h1 {
-  color: seagreen;
-  text-align: center;
+    color: seagreen;
+    text-align: center;
+}
+.center {
+  margin-left: 0px auto;
+  margin-right: 0px auto;
 }
