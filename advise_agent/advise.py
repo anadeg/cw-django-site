@@ -1,3 +1,6 @@
+from pathlib import Path
+import os
+
 import pandas as pd
 import numpy as np
 
@@ -14,8 +17,9 @@ from sklearn.model_selection import cross_val_score
 from sklearn.metrics import accuracy_score
 
 
-DATA_FILE = "cw-data-2.csv"
-TRAIN_FILE = "cw-train-2.csv"
+# DATA_FILE = "cw-data-2.csv"
+BASE_DIR = Path(__file__).resolve().parent.parent
+TRAIN_FILE = os.path.join(BASE_DIR, 'advise_agent', "cw-train-2.csv")
 
 
 class Advise:
@@ -36,6 +40,8 @@ class Advise:
         data['region'].replace(mapping, inplace=True)
 
         data.fillna(0, inplace=True)
+
+        data = data.sample(frac=1)
 
         self.le = LabelEncoder()
         data['he'] = self.le.fit_transform(data['he'])
@@ -102,6 +108,44 @@ class Advise:
             self.model = preferred_model
 
 
+def main(adv, preferred_model=None):
+    adv.convert(TRAIN_FILE)
+    match preferred_model:
+        case "logr":
+            models = [LogisticRegression()]
+        case "rfc":
+            models = [RandomForestClassifier()]
+        case "svc":
+            models = [SVC()]
+        case "knc":
+            models = [KNeighborsClassifier()]
+        case "xgbc":
+            models = [XGBClassifier()]
+        case "cbc":
+            models = [CatBoostClassifier()]
+        case _:
+            logr = LogisticRegression()
+            rfc = RandomForestClassifier()
+            svc = SVC()
+            knc = KNeighborsClassifier()
+            xgb = XGBClassifier()
+            cbc = CatBoostClassifier(verbose=False)
+            models = [logr, rfc, svc, knc, xgb, cbc]
+    adv.teach(models)
+
+
+def advise_he(to_predict, adv):
+    mapping = {"Брестская": 1, "Бресткая": 1, "Брестcкая": 1, "Витебская": 2, "Гомельская": 3, "Гродненская": 4,
+               "Минск": 5, "Минская": 6, "Могилевская": 7, "Могилёвская": 7, "Не важно": 0}
+    to_predict['region'].replace(mapping, inplace=True)
+    to_predict.fillna(0, inplace=True)
+    predict = adv.features_engineering(to_predict)
+
+    predict = np.array(predict)
+    results = adv.advise(predict)
+    return results
+
+
 if __name__ == '__main__':
     adv = Advise()
     adv.convert(TRAIN_FILE)
@@ -114,7 +158,8 @@ if __name__ == '__main__':
     cbc = CatBoostClassifier(verbose=False)
 
     models = [lr, rfc, svc, knc, xgb, cbc]
-    adv.teach(models, preferred_model=rfc)
+    # adv.teach(models, preferred_model=rfc)
+    adv.teach(models)
 
     predict = pd.read_csv('cw-pashka.csv')
     mapping = {"Брестская": 1, "Бресткая": 1, "Витебская": 2, "Гомельская": 3, "Гродненская": 4,
