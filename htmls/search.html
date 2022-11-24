@@ -1,12 +1,22 @@
 <!DOCTYPE html>
 <html>
+<!--{% load static %}-->
 <head>
     <meta charset="UTF-8">
     <title>Search Page</title>
+<!--    <link rel="stylesheet" href="{% static 'style.css' %}">-->
 </head>
 <body>
-    <table cellspacing="2" border="1" cellpadding="5">
-        <th>Понятие</th><th>Описание</th>
+    <form action="{{ concept_search }}" method="get">
+        <input type="text" name="concept_search" placeholder="concept">
+        <input type="submit" value="search">
+    </form>
+    <br>
+    <br>
+    <table style="width:80%" cellspacing="2" border="1" cellpadding="5">
+        <tr>
+            <th>Понятие</th><th style="width:70%">Описание</th>
+        </tr>
         {% for title, description in concepts.items %}
         <tr>
             <td>{{ title }}</td>
@@ -16,9 +26,5 @@
     </table>
     <br>
     <br>
-    <form action="{{ concept_search }}" method="get">
-        <input type="text" name="concept_search" placeholder="concept">
-        <input type="submit" value="search">
-    </form>
 </body>
 </html>
