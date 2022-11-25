@@ -1,26 +1,27 @@
 <!DOCTYPE html>
 <html>
-<!--{% load static %}-->
+{% load static %}
 <head>
     <meta charset="UTF-8">
     <title>Search Page</title>
-<!--    <link rel="stylesheet" href="{% static 'style.css' %}">-->
+    <link rel="stylesheet" href="{% static 'style.css' %}">
 </head>
 <body>
     <form action="{{ concept_search }}" method="get">
-        <input type="text" name="concept_search" placeholder="concept">
-        <input type="submit" value="search">
+        <input type="text" name="concept_search" placeholder="понятие">
+        <input type="submit" value="Найти">
     </form>
     <br>
     <br>
-    <table style="width:80%" cellspacing="2" border="1" cellpadding="5">
+    <table class="center" cellspacing="2" border="1" cellpadding="5">
         <tr>
-            <th>Понятие</th><th style="width:70%">Описание</th>
+            <th>Понятие</th><th style="width:70%">Описание</th><th>Включения</th>
         </tr>
-        {% for title, description in concepts.items %}
+        {% for concept, description in concepts.items %}
         <tr>
-            <td>{{ title }}</td>
+            <td>{{ concept }}</td>
             <td>{{ description }}</td>
+            <td><a href="inclusion/{{ concept }}">список включений</a></td>
         </tr>
         {% endfor %}
     </table>
