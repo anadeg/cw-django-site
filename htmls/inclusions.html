@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <title>Inclusions</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+    <form action="{% url 'srch_concept' %}" method="get">
+        <input type="text" name="concept_search" placeholder="понятие">
+        <input type="submit" value="Найти">
+    </form>
+
+    <br>
+
+    {% if incl_descr %}
+    <table class="center" cellspacing="2" border="1" cellpadding="5">
+        <tr>
+            <th>Понятие</th><th style="width:70%">Определение</th><th>Включение</th>
+        </tr>
+        {% for inclusion, description in incl_descr.items %}
+        <tr>
+            <td>{{ inclusion }}</td>
+            <td>{{ description }}</td>
+            <td><a href="{{ inclusion }}">список включений</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    {% else %}
+    <h2 align="center">Понятие {{ upper }} не имеет включений</h2>
+    {% endif %}
+
+    <br>
+    <button name="back"><a href="{{request.META.HTTP_REFERER}}">Вернуться</a></button>
+
+</body>
+</html>
