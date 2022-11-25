@@ -19,12 +19,15 @@ from django.urls import path
 from pages.views import (home_view,
                          search_view,
                          advise_he_form_view,
-                         advise_he_view)
+                         advise_he_view,
+                         search_base_inclusions_view)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home_view, name='home'),
     path('search_concept/', search_view, name='srch_concept'),
+    path('search_concept/inclusion/<str:concept>', search_base_inclusions_view, name='concept_incls'),
+    # path('search_inclusions/', search_inclusions_view, name='srch_inclusions'),
     path('advise_higher_education/', advise_he_form_view, name="he_form"),
     path('advise_higher_education/advise', advise_he_view, name="he_advise")
 ]
