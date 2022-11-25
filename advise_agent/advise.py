@@ -121,16 +121,13 @@ def main(adv, preferred_model=None):
             models = [KNeighborsClassifier()]
         case "xgbc":
             models = [XGBClassifier()]
-        case "cbc":
-            models = [CatBoostClassifier()]
         case _:
             logr = LogisticRegression()
             rfc = RandomForestClassifier()
             svc = SVC()
             knc = KNeighborsClassifier()
             xgb = XGBClassifier()
-            cbc = CatBoostClassifier(verbose=False)
-            models = [logr, rfc, svc, knc, xgb, cbc]
+            models = [logr, rfc, svc, knc, xgb]
     adv.teach(models)
 
 
