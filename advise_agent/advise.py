@@ -49,7 +49,7 @@ class Advise:
         self.X = data.drop(['he'], axis=1)
         self.Y = data['he']
 
-        self.X = self.features_engineering(self.X)
+        # self.X = self.features_engineering(self.X)
 
     def features_engineering(self, x):
         x['journ-int_com-theo'] = x['journ'] + x['int_com'] + x['theo']
@@ -139,9 +139,9 @@ def advise_he(to_predict, adv):
                "Минск": 5, "Минская": 6, "Могилевская": 7, "Могилёвская": 7, "Не важно": 0}
     to_predict['region'].replace(mapping, inplace=True)
     to_predict.fillna(0, inplace=True)
-    predict = adv.features_engineering(to_predict)
+    # predict = adv.features_engineering(to_predict)
 
-    predict = np.array(predict)
+    predict = np.array(to_predict)
     results = adv.advise(predict)
     return results
 
@@ -166,7 +166,7 @@ if __name__ == '__main__':
                "Минск": 5, "Минская": 6, "Могилевская": 7, "Могилёвская": 7}
     predict['region'].replace(mapping, inplace=True)
     predict.fillna(0, inplace=True)
-    predict = adv.features_engineering(predict)
+    # predict = adv.features_engineering(predict)
 
     print(f"Model \t\t\t|\t {adv.model}")
     y_true = adv.Y
