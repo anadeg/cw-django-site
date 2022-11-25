@@ -1,11 +1,13 @@
+
 body {
-    background-color: floralwhite;
+    background-color: azure;
 }
 h1 {
     color: seagreen;
     text-align: center;
 }
 .center {
-  margin-left: 0px auto;
-  margin-right: 0px auto;
+  margin-left: auto;
+  margin-right: auto;
+  width:90%;
 }
