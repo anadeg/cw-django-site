@@ -36,7 +36,7 @@ def query(q):
 
 
 def search_view(request, *args, **kwargs):
-    concept = request.GET.get('concept_search')
+    concept = request.GET.get('concept_search') or 'социальный институт'
     path = os.path.join('search.html')
     if concept == '':
         return render(request, path, {})
@@ -62,15 +62,9 @@ def search_base_inclusions_view(request, concept, *args, **kwargs):
                 inner join concepts as c2
                 on inclusions.childid = c2.id
                 where c1.concept = '{concept}';"""
-    # dscr = f"""select description from concepts where concept = '{concept}';"""
     try:
         c = query(select)
-        # print(c)
-        # description = query(dscr)
-        # inclusions = [c[i][1] for i in range(len(c))]
-        # description = [c[i][-1] for i in range(len(c))]
         incl_descr = {c[i][1]: c[i][-1] for i in range(len(c))}
-        print(incl_descr, sep='\n')
         context = {
             "upper": concept,
             "incl_descr": incl_descr
@@ -139,6 +133,26 @@ def predict_he(to_predict, preferred):
     accuracy = accuracy_score(adv.Y, adv.model.predict(adv.X))
 
     return result, accuracy
+
+
+def state_list_view(request, *args, **kwargs):
+    path = os.path.join('states.html')
+    st_date = """select s.name, fd.datevalue, rb.name
+                from states as s
+                inner join foundation_date as fd
+                on s.id = fd.stateid
+                left join official_religion as oreg
+                on s.id = oreg.stateid
+                left join religion_branches as rb
+                on oreg.offrelid = rb.id;"""
+    try:
+        c = query(st_date)
+        context = {
+            "state_data": c
+        }
+        return render(request, path, context)
+    except Exception:
+        return render(request, path, {})
 
 
 if __name__ == '__main__':

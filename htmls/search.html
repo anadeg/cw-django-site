@@ -5,12 +5,71 @@
     <meta charset="UTF-8">
     <title>Search Page</title>
     <link rel="stylesheet" href="{% static 'style.css' %}">
+    <style>
+        .centered {
+            text-align: center;
+                    }
+        button {
+            position: absolute;
+            bottom: 10px;
+            left:50%;
+            margin-left: -100px;
+
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            padding: 12px 16px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            width: 200px;
+            transition-duration: 0.3s;
+                    }
+        button:hover {
+	        background: rgba(0,0,0,0);
+	        color: #4CAF50;
+	        box-shadow: inset 0 0 0 2px #4CAF50;
+                    }
+        a:link {
+            color: black;
+            text-decoration: underline;
+        }
+        a:visited {
+            color: black;
+            text-decoration: underline;
+        }
+        input[type=submit] {
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            padding: 3px 5px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 14px;
+            width: 100px;
+            transition-duration: 0.3s;
+        }
+        input[type=submit]:hover {
+	        background: rgba(0,0,0,0);
+	        color: #4CAF50;
+	        box-shadow: inset 0 0 0 2px #4CAF50;
+        }
+        input[type=text], input[type=text]:hover {
+            background: rgba(0,0,0,0);
+            width: 200px;
+            border: solid black 2px;
+    </style>
 </head>
 <body>
+    {% include 'navbar.html' %}
+    <div class="centered">
     <form action="{{ concept_search }}" method="get">
         <input type="text" name="concept_search" placeholder="понятие">
         <input type="submit" value="Найти">
     </form>
+    </div>
     <br>
     <br>
     <table class="center" cellspacing="2" border="1" cellpadding="5">
@@ -26,6 +85,10 @@
         {% endfor %}
     </table>
     <br>
+
     <br>
+    <div class="centered">
+        <button name="back"><a href="{{request.META.HTTP_REFERER}}">Вернуться</a></button>
+    </div>
 </body>
 </html>

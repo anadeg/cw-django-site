@@ -3,27 +3,22 @@
 {% load static %}
 <head>
     <meta charset="UTF-8">
-    <title>Higher Education Advise</title>
+    <title>States</title>
     <link rel="stylesheet" href="{% static 'style.css' %}">
     <style>
         .centered {
             text-align: center;
                     }
         button {
-            position: absolute;
-            bottom: 10px;
-            left:50%;
-            margin-left: -100px;
-
             background-color: #4CAF50;
             border: none;
             color: white;
-            padding: 12px 16px;
+            padding: 15px 32px;
             text-align: center;
             text-decoration: none;
             display: inline-block;
             font-size: 16px;
-            width: 200px;
+            width: 280px;
             transition-duration: 0.3s;
                     }
         button:hover {
@@ -39,17 +34,34 @@
             color: black;
             text-decoration: none;
         }
+        a:hover{
+            color: #4CAF50;
+        }
     </style>
 </head>
 <body>
     {% include 'navbar.html' %}
-    <h1>Возможно, Вам подойдет</h1>
-    <div class="centered">
-        <h2>{{ he }}</h2>
-        <h3>Точность - {{ accuracy }}%</h3>
+    <table class="center" style="width:40%" cellspacing="2" border="1" cellpadding="5">
+        <tr>
+            <th>Государство</th><th>Дата основания</th><th>Официальная религия</th>
+        </tr>
+        {% for state, date, official_religion in state_data %}
+        <tr>
+            <td>{{ state}}</td>
+            <td>{{ date }}</td>
+            {% if official_religion %}
+            <td>{{ official_religion }}</td>
+            {% else %}
+            <td>нет данных</td>
+            {% endif %}
+        </tr>
+        {% endfor %}
+    </table>
 
-        <br>
+    <br>
+    <div class="centered">
         <button name="back"><a href="{{request.META.HTTP_REFERER}}">Вернуться</a></button>
     </div>
+
 </body>
 </html>

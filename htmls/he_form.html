@@ -5,79 +5,127 @@
     <meta charset="UTF-8">
     <title>Higher Education Form</title>
     <link rel="stylesheet" href="{% static 'style.css' %}">
+    <style>
+        .centered {
+            text-align: center;
+        }
+        input[type=submit] {
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            padding: 12px 16px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            width: 200px;
+            transition-duration: 0.3s;
+        }
+        input[type=submit]:hover {
+	        background: rgba(0,0,0,0);
+	        color: #4CAF50;
+	        box-shadow: inset 0 0 0 3px #4CAF50;
+        }
+        a:link {
+            color: black;
+            text-decoration: none;
+        }
+        a:visited {
+            color: black;
+            text-decoration: none;
+        }
+        select {
+            border: none;
+            color: black;
+            padding: 4px 6px;
+            text-align: left;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 14px;
+            width: 350px;
+            transition-duration: 0.3s;
+        }
+        .fieldset {
+            width: 350px;
+            margin: auto;
+        }
+    </style>
 </head>
 <body>
+    {% include 'navbar.html' %}
+
     <form name="he_form" method="post" action="advise">
         {% csrf_token %}
-        <fieldset>
-            <legend>Выберите желаемые профили</legend>
-                <input type="checkbox" id="avia" value="avia" name="preferred"><label for="avia">Авиация</label>
-                <br>
-                <input type="checkbox" id="bio" value="bio" name="preferred"><label for=bio>Биология</label>
-                <br>
-                <input type="checkbox" id="vet" value="vet" name="preferred"><label for=vet>Ветеринария</label>
-                <br>
-                <input type="checkbox" id="war" value="war" name="preferred"><label for=war>Военное дело</label>
-                <br>
-                <input type="checkbox" id="geo" value="geo" name="preferred"><label for=geo>География</label>
-                <br>
-                <input type="checkbox" id="design" value="design" name="preferred"><label for=design>Дизайн</label>
-                <br>
-                <input type="checkbox" id="journ" value="journ" name="preferred"><label for=journ>Журналистика</label>
-                <br>
-                <input type="checkbox" id="engin" value="engin" name="preferred"><label for=engin>Инженерное дело</label>
-                <br>
-                <input type="checkbox" id="it" value="it" name="preferred"><label for=it>Информационные технологии</label>
-                <br>
-                <input type="checkbox" id="art" value="art" name="preferred"><label for=art>Изобразительное искусство</label>
-                <br>
-                <input type="checkbox" id="hist" value="hist" name="preferred"><label for=hist>История</label>
-                <br>
-                <input type="checkbox" id="forest" value="forest" name="preferred"><label for=forest>Лесное хозяйство</label>
-                <br>
-                <input type="checkbox" id="lingo" value="lingo" name="preferred"><label for=lingo>Лингвистика/Филология</label>
-                <br>
-                <input type="checkbox" id="math" value="math" name="preferred"><label for=math>Математика</label>
-                <br>
-                <input type="checkbox" id="med" value="med" name="preferred"><label for=med>Медицина</label>
-                <br>
-                <input type="checkbox" id="int_com" value="int_com" name="preferred"><label for=int_com>Международные отношения</label>
-                <br>
-                <input type="checkbox" id="music" value="music" name="preferred"><label for=music>Музыка</label>
-                <br>
-                <input type="checkbox" id="teach" value="teach" name="preferred"><label for=teach>Преподавание/Педагогика</label>
-                <br>
-                <input type="checkbox" id="psy" value="psy" name="preferred"><label for=psy>Психология</label>
-                <br>
-                <input type="checkbox" id="com" value="com" name="preferred"><label for=com>Связь</label>
-                <br>
-                <input type="checkbox" id="agri" value="agri" name="preferred"><label for=agri>Сельское хозяйство</label>
-                <br>
-                <input type="checkbox" id="ss" value="ss" name="preferred"><label for=ss>Социальные науки (социология)</label>
-                <br>
-                <input type="checkbox" id="theo" value="theo" name="preferred"><label for=theo>Теология</label>
-                <br>
-                <input type="checkbox" id="techn" value="techn" name="preferred"><label for=techn>Техника</label>
-                <br>
-                <input type="checkbox" id="technl" value="technl" name="preferred"><label for=technl>Технологии</label>
-                <br>
-                <input type="checkbox" id="turism" value="turism" name="preferred"><label for=turism>Туризм</label>
-                <br>
-                <input type="checkbox" id="physics" value="physics" name="preferred"><label for=physics>Физика</label>
-                <br>
-                <input type="checkbox" id="phys_cult" value="phys_cult" name="preferred"><label for=phys_cult>Физическая культура</label>
-                <br>
-                <input type="checkbox" id="chem" value="chem" name="preferred"><label for=chem>Химия</label>
-                <br>
-                <input type="checkbox" id="econ" value="econ" name="preferred"><label for=econ>Экономика</label>
-                <br>
-                <input type="checkbox" id="law" value="law" name="preferred"><label for=law>Юридическое дело</label>
+        <fieldset class="fieldset">
+            <legend><b>Выберите желаемые профили</b></legend>
+                    <input type="checkbox" id="avia" value="avia" name="preferred"><label for="avia">Авиация</label>
+                    <br>
+                    <input type="checkbox" id="bio" value="bio" name="preferred"><label for=bio>Биология</label>
+                    <br>
+                    <input type="checkbox" id="vet" value="vet" name="preferred"><label for=vet>Ветеринария</label>
+                    <br>
+                    <input type="checkbox" id="war" value="war" name="preferred"><label for=war>Военное дело</label>
+                    <br>
+                    <input type="checkbox" id="geo" value="geo" name="preferred"><label for=geo>География</label>
+                    <br>
+                    <input type="checkbox" id="design" value="design" name="preferred"><label for=design>Дизайн</label>
+                    <br>
+                    <input type="checkbox" id="journ" value="journ" name="preferred"><label for=journ>Журналистика</label>
+                    <br>
+                    <input type="checkbox" id="engin" value="engin" name="preferred"><label for=engin>Инженерное дело</label>
+                    <br>
+                    <input type="checkbox" id="it" value="it" name="preferred"><label for=it>Информационные технологии</label>
+                    <br>
+                    <input type="checkbox" id="art" value="art" name="preferred"><label for=art>Изобразительное искусство</label>
+                    <br>
+                    <input type="checkbox" id="hist" value="hist" name="preferred"><label for=hist>История</label>
+                    <br>
+                    <input type="checkbox" id="forest" value="forest" name="preferred"><label for=forest>Лесное хозяйство</label>
+                    <br>
+                    <input type="checkbox" id="lingo" value="lingo" name="preferred"><label for=lingo>Лингвистика/Филология</label>
+                    <br>
+                    <input type="checkbox" id="math" value="math" name="preferred"><label for=math>Математика</label>
+                    <br>
+                    <input type="checkbox" id="med" value="med" name="preferred"><label for=med>Медицина</label>
+                    <br>
+                    <input type="checkbox" id="int_com" value="int_com" name="preferred"><label for=int_com>Международные отношения</label>
+                    <br>
+                    <input type="checkbox" id="music" value="music" name="preferred"><label for=music>Музыка</label>
+                    <br>
+                    <input type="checkbox" id="teach" value="teach" name="preferred"><label for=teach>Преподавание/Педагогика</label>
+                    <br>
+                    <input type="checkbox" id="psy" value="psy" name="preferred"><label for=psy>Психология</label>
+                    <br>
+                    <input type="checkbox" id="com" value="com" name="preferred"><label for=com>Связь</label>
+                    <br>
+                    <input type="checkbox" id="agri" value="agri" name="preferred"><label for=agri>Сельское хозяйство</label>
+                    <br>
+                    <input type="checkbox" id="ss" value="ss" name="preferred"><label for=ss>Социальные науки (социология)</label>
+                    <br>
+                    <input type="checkbox" id="theo" value="theo" name="preferred"><label for=theo>Теология</label>
+                    <br>
+                    <input type="checkbox" id="techn" value="techn" name="preferred"><label for=techn>Техника</label>
+                    <br>
+                    <input type="checkbox" id="technl" value="technl" name="preferred"><label for=technl>Технологии</label>
+                    <br>
+                    <input type="checkbox" id="turism" value="turism" name="preferred"><label for=turism>Туризм</label>
+                    <br>
+                    <input type="checkbox" id="physics" value="physics" name="preferred"><label for=physics>Физика</label>
+                    <br>
+                    <input type="checkbox" id="phys_cult" value="phys_cult" name="preferred"><label for=phys_cult>Физическая культура</label>
+                    <br>
+                    <input type="checkbox" id="chem" value="chem" name="preferred"><label for=chem>Химия</label>
+                    <br>
+                    <input type="checkbox" id="econ" value="econ" name="preferred"><label for=econ>Экономика</label>
+                    <br>
+                    <input type="checkbox" id="law" value="law" name="preferred"><label for=law>Юридическое дело</label>
+
         </fieldset>
 
         <br>
 
-        <fieldset>
-            <legend>Выберите область</legend>
+        <fieldset class="fieldset">
+            <legend><b>Выберите область</b></legend>
                 <select name="region">
                     <option>Не важно</option>
                     <option>Брестcкая</option>
@@ -92,8 +140,8 @@
 
         <br>
 
-        <fieldset>
-            <legend>Укажите необходимость общежития</legend>
+        <fieldset class="fieldset">
+            <legend><b>Укажите необходимость общежития</b></legend>
                 <select name="dormitory">
                     <option value="0">Без разницы</option>
                     <option value="1">Желательно</option>
@@ -103,8 +151,8 @@
 
         <br>
 
-        <fieldset>
-            <legend>Укажите предпочитаемый метод предсказания</legend>
+        <fieldset class="fieldset">
+            <legend><b>Укажите метод предсказания</b></legend>
                 <select name="model">
                     <option value="None">Не важно</option>
                     <option value="logr">Логистическая регрессия</option>
@@ -116,8 +164,10 @@
         </fieldset>
 
         <br>
-        <br>
-        <input type="submit" value="Посоветовать">
+        <div class="centered">
+            <input type="submit" value="Посоветовать">
+        </div>
     </form>
+
 </body>
 </html>
